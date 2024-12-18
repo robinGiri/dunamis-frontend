@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white">
       <div className="">
         <div className="flex justify-between h-16">
           <div className="flex">

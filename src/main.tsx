@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  BrowserRouter as Router,
-  Routes,
+  Navigate,
   Route,
-  Navigate
+  BrowserRouter as Router,
+  Routes
 } from 'react-router-dom';
-import Login from './public/Login';
-import Home from './public/Home';
-import { User } from './types';
 import './index.css';
+import Home from './public/Home';
+import Login from './public/Login';
 
 ReactDOM.render(
   <React.StrictMode>
