@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
 import Login from './public/Login';
-import { User } from './types';  // Import the User type
+import Home from './public/Home';
+import { User } from './types';
+import './index.css';
 
-const Main = () => {
-  const [user, setUser] = useState<User | null>(null);  // Use TypeScript union type for state
-
-  const handleLoginSuccess = (user: User) => {
-    setUser(user);
-    console.log('Logged in user:', user);
-  };
-
-  return (
-    <div>
-      {!user ? (
-        <Login onLoginSuccess={handleLoginSuccess} />
-      ) : (
-        <App />
-      )}
-    </div>
-  );
-};
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <Router>
+      <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
