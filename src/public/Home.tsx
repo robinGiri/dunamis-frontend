@@ -1,16 +1,21 @@
 import Hero from "./Hero";
 import NavigationBar from "./NavigationBar";
+import Degree from "./Degree";
+import ScheduleVisit from "./ScheduleVisit";
+import Bottom from "./Bottom";
 
 const Home = () => {
   return (
-    <div className="p-4">
-      <NavigationBar />
-      <Hero onEnter={() => alert('Entering...')} />
-      <main>
-        <h1 className="text-2xl font-bold text-center mt-6">
-          Welcome to the Home Page!
-        </h1>
-      </main>
+    <div>
+      <div className="p-4">
+        <NavigationBar />
+        <main>
+          <Hero onEnter={() => alert("Entering...")} />
+          <Degree />
+          <ScheduleVisit />
+        </main>
+      </div>
+      <Bottom />
     </div>
   );
 };
