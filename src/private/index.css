@@ -1,0 +1,47 @@
+@import url("./components/ui/CustomSelect/CustomSelect.module.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-gilroy-medium bg-dark text-light-white;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto px-[20px] pt-[20px] pb-[40px] max-w-[375px] md:max-w-[744px] md:pt-[32px] md:pb-[32px] lg:pb-[27px] lg:max-w-[1256px];
+  }
+
+  .section {
+    @apply rounded-30 bg-light-dark w-full py-[40px] px-[20px] md:px-[40px] lg:pb-[28px];
+  }
+}
+
+@layer utilities {
+  .title {
+    @apply text-20 font-gilroy-bold leading-none tracking-[-0.4px] md:text-28 md:leading-[1.14] md:tracking-[0.56px];
+  }
+
+  .diary-item::before {
+    @apply absolute -left-[25px] rounded-4 content-[url("/icons/list.svg")] w-[16px] h-[16px] z-[1] md:w-[20px] md:h-[20px] md:-left-[26px] lg:left-[-30px];
+  }
+
+  .diary-item::after {
+    @apply bg-light-dark absolute top-[20px] w-[2px] h-full -left-[18px] content-[""] z-0  lg:-left-[22px];
+  }
+
+  .diary-list-scroll::-webkit-scrollbar {
+    @apply w-[4px] max-h-[4px] rounded-15 bg-transparent;
+  }
+
+  .diary-list-scroll::-webkit-scrollbar-thumb {
+    @apply ml-[10px] rounded-15  bg-dark-grey !w-[100px] !h-[100px];
+  }
+
+  .diary-list-scroll::-webkit-scrollbar-track {
+    @apply bg-transparent my-[16px];
+  }
+}
