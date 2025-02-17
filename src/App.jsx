@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Home from "./Pages/Home";
-import Books from "./Pages/Books";
+import Home from "./public/Pages/Home";
+import Books from "./public/Pages/Books";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,8 +9,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import AuthProvider from "./auth_context/AuthProvider";
-import ProtectedRoute from "./components/ProtectedRoute";
+import AuthProvider from "./public/auth_context/AuthProvider";
+import ProtectedRoute from "./public/components/ProtectedRoute";
 
 export default function App() {
   const Logout = () => {
