@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
 import { modalReducer } from "./modal/modalSlice";
-import { AuthState } from "types/auth";
+import { AuthState } from "../types/auth";
 import { bookApi } from "./book/bookSlice";
 
 import storage from "redux-persist/lib/storage";
