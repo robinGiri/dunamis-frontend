@@ -1,7 +1,5 @@
 import React from "react";
 import TextYellow from "../styles/TextYellow";
-import EmailInput from "./banner/EmailInput";
-import Button from "./banner/Button";
 import AutoPlay from "./banner/Carousel";
 
 export default function Banner() {
@@ -22,10 +20,6 @@ export default function Banner() {
             </p>
             <div className="mb-4">
               <AutoPlay />
-            </div>
-            <div className="flex flex-col gap-2 md:flex-row">
-              <EmailInput />
-              <Button value="send" />
             </div>
           </div>
         </div>

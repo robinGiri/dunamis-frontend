@@ -28,7 +28,7 @@ export default function Modal({ id }) {
       };
       try {
         const response = await axios.post(
-          "http://localhost:8001/user/login",
+          "http://localhost:3000/api/v1/auth/login",
           userData
         );
         console.log(response.data);
@@ -60,7 +60,7 @@ export default function Modal({ id }) {
     };
     try {
       const response = await axios.post(
-        "http://localhost:8001/user/register",
+        "http://localhost:3000/api/v1/auth/register",
         userData
       );
       if (response.data) {

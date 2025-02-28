@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./public/Pages/Home";
 import Books from "./public/Pages/Books";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  Navigate,
-} from "react-router-dom";
+import Contact from "./public/Pages/Contact";
+import About from "./public/Pages/About";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "./public/auth_context/AuthProvider";
 import ProtectedRoute from "./public/components/ProtectedRoute";
@@ -22,11 +18,9 @@ export default function App() {
     }, [navigate]);
     return null;
   };
+
   return (
-    <div
-      className="dark:bg-base-100 dark:text-gray-200 bg-gray-100
-   text-gray-700"
-    >
+    <div className="dark:bg-base-100 dark:text-gray-200 bg-gray-100 text-gray-700">
       <Router>
         <AuthProvider>
           <Routes>
@@ -39,11 +33,12 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
             <Route path="/user/logout" element={<Logout />} />
           </Routes>
         </AuthProvider>
       </Router>
-
       <Toaster />
     </div>
   );

@@ -11,9 +11,9 @@ export default function BookList() {
   useEffect(() => {
     const fetchBookList = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/book/");
+        const response = await axios.get("http://localhost:3000/api/v1/course/getAllCourse");
         console.log("Fetched Data", response.data);
-        setBookList(response.data);
+        setBookList(response.data.data);
       } catch (error) {
         console.log("Error occured while fetching the data", error);
       }

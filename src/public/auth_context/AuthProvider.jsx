@@ -1,21 +1,30 @@
-import React, { createContext, useContext } from "react";
-import { useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
+// Create the AuthContext
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const currAuthUser = localStorage.getItem("USER");
-  const [authUser, setAuthUser] = useState(
-    currAuthUser ? JSON.parse(currAuthUser) : null
-  );
+  // Retrieve the stored user from localStorage
+  const storedUser = localStorage.getItem("USER");
+  
+  // Initialize authUser state by parsing storedUser safely.
+  let initialUser = null;
+  try {
+    // Only parse if storedUser exists and isn't the literal string "undefined"
+    if (storedUser && storedUser !== "undefined") {
+      initialUser = JSON.parse(storedUser);
+    }
+  } catch (error) {
+    // If parsing fails, fallback to null
+    initialUser = null;
+  }
+
+  const [authUser, setAuthUser] = useState(initialUser);
   const [isAuthorised, setIsAuthorised] = useState(false);
 
+  // Update isAuthorised based on authUser changes
   useEffect(() => {
-    if (authUser !== null) {
-      setIsAuthorised(true);
-    } else {
-      setIsAuthorised(false);
-    }
+    setIsAuthorised(authUser !== null);
   }, [authUser]);
 
   return (
@@ -24,4 +33,6 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+// Custom hook to use the AuthContext
 export const useAuth = () => useContext(AuthContext);
