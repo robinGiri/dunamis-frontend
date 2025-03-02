@@ -30,9 +30,9 @@ export default function Contact() {
       {/* Navbar is rendered at the top */}
       <Navbar />
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col items-center p-6">
+      <div className="min-h-screen bg-base-200 flex flex-col items-center p-6">
         <div className="w-full max-w-4xl p-6">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
+          <h1 className="text-4xl font-bold text-center mb-6">
             Contact Us
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -103,14 +103,14 @@ export default function Contact() {
             {/* Map Card */}
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body p-0">
-                <iframe
-                  title="Our Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0191643512866!2d-122.42067908468116!3d37.77902697975751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808c3f36e9e7%3A0xc0633a451f03f2a4!2sCity%20Hall!5e0!3m2!1sen!2sus!4v1618940211034!5m2!1sen!2sus"
-                  className="w-full h-80 rounded-b-lg"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                ></iframe>
+              <iframe
+                title="Kathmandu Map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.253236315241!2d85.31721901504235!3d27.701696982795493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb190e4937c9d5%3A0x887a70fa9af9a03c!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2sus!4v1685587547540!5m2!1sen!2sus"
+                className="w-full h-full rounded-b-lg"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
               </div>
             </div>
           </div>

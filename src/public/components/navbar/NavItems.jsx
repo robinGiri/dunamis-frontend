@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../auth_context/AuthProvider";
 
 export default function NavItems() {
-  const { isAuthorised } = useAuth();
+  const { isAuthorised, authUser } = useAuth();
 
-  // Define active and inactive class names using daisyUI and Tailwind
+  // Define active and inactive class names using daisyUI/Tailwind classes
   const activeClass = "bg-primary text-white rounded-lg px-4 py-2";
   const inactiveClass =
     "text-base-content hover:bg-base-200 rounded-lg px-4 py-2 transition-colors duration-300";
@@ -15,9 +15,7 @@ export default function NavItems() {
       <li>
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive ? activeClass : inactiveClass
-          }
+          className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         >
           Home
         </NavLink>
@@ -26,9 +24,7 @@ export default function NavItems() {
         <li>
           <NavLink
             to="/books"
-            className={({ isActive }) =>
-              isActive ? activeClass : inactiveClass
-            }
+            className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
           >
             Books
           </NavLink>
@@ -46,9 +42,7 @@ export default function NavItems() {
       <li>
         <NavLink
           to="/contact"
-          className={({ isActive }) =>
-            isActive ? activeClass : inactiveClass
-          }
+          className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         >
           Contact
         </NavLink>
@@ -56,13 +50,33 @@ export default function NavItems() {
       <li>
         <NavLink
           to="/about"
-          className={({ isActive }) =>
-            isActive ? activeClass : inactiveClass
-          }
+          className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
         >
           About
         </NavLink>
       </li>
+      {/* Only show Quiz tab if the user is a student */}
+      {isAuthorised && authUser?.student?.role === "student" && (
+        <li>
+          <NavLink
+            to="/quiz/take"
+            className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+          >
+            Quiz
+          </NavLink>
+        </li>
+      )}
+      {/* Optionally, add an Admin link if needed */}
+      {isAuthorised && authUser?.student?.role === "admin" && (
+        <li>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+          >
+            Admin
+          </NavLink>
+        </li>
+      )}
     </>
   );
 }

@@ -31,6 +31,7 @@ export default function Modal({ id }) {
           "http://localhost:3000/api/v1/auth/login",
           userData
         );
+        debugger;
         console.log(response.data);
         if (response.data) {
           document.getElementById(id).close();
@@ -39,7 +40,7 @@ export default function Modal({ id }) {
             window.location.reload();
           }, 400);
         }
-        localStorage.setItem("USER", JSON.stringify(response.data.user));
+        localStorage.setItem("USER", JSON.stringify(response.data));
       } catch (error) {
         setError("Invalid username or password");
       }
