@@ -11,7 +11,9 @@ export default function BookList() {
   useEffect(() => {
     const fetchBookList = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/course/getAllCourse");
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/course/getAllCourse"
+        );
         console.log("Fetched Data", response.data);
         setBookList(response.data.data);
       } catch (error) {
@@ -33,8 +35,9 @@ export default function BookList() {
       <div className="mt-12 grid  grid-cols-1 md:grid-cols-3 gap-x-20">
         {bookList.map((book) => (
           <BookCard
-            key={book.id}
-            name={book.name}
+            key={book._id}
+            _id={book._id}
+            name={book.courseName}
             author={book.author}
             category={book.category}
             img={book.img}

@@ -31,8 +31,6 @@ export default function Modal({ id }) {
           "http://localhost:3000/api/v1/auth/login",
           userData
         );
-        debugger;
-        console.log(response.data);
         if (response.data) {
           document.getElementById(id).close();
           toast.success("Login successfull");

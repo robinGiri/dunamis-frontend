@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 export default function CourseAdmin() {
   const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentCourse, setCurrentCourse] = useState({
@@ -15,12 +16,16 @@ export default function CourseAdmin() {
     author: "",
     category: "",
     img: "",
+    videoId: "",
+    courseContain: "",
   });
 
   // Fetch courses from API
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/course/getAllCourse");
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/course/getAllCourse"
+      );
       setCourses(res.data.data);
     } catch (error) {
       console.error("Error fetching courses", error);
@@ -28,11 +33,24 @@ export default function CourseAdmin() {
     }
   };
 
+  // Fetch categories from API
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/v1/category");
+      // Assuming API returns { success: true, data: [ { _id, name, description }, ... ] }
+      setCategories(res.data.data);
+    } catch (error) {
+      console.error("Error fetching categories", error);
+      toast.error("Failed to fetch categories");
+    }
+  };
+
   useEffect(() => {
     fetchCourses();
+    fetchCategories();
   }, []);
 
-  // Handle input changes for both add and edit forms
+  // Handle input changes for add/edit forms (for other fields)
   const handleChange = (e) => {
     setCurrentCourse({ ...currentCourse, [e.target.name]: e.target.value });
   };
@@ -41,7 +59,12 @@ export default function CourseAdmin() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/v1/course/createCourse", currentCourse);
+      // Destructure _id out so that it is not sent to the API
+      const { _id, ...payload } = currentCourse;
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/course/createCourse",
+        payload
+      );
       toast.success("Course added successfully!");
       setShowAddModal(false);
       setCurrentCourse({
@@ -53,6 +76,8 @@ export default function CourseAdmin() {
         author: "",
         category: "",
         img: "",
+        videoId: "",
+        courseContain: "",
       });
       fetchCourses();
     } catch (error) {
@@ -66,7 +91,10 @@ export default function CourseAdmin() {
     e.preventDefault();
     try {
       const { _id, ...courseData } = currentCourse;
-      const res = await axios.put(`http://localhost:3000/api/v1/course/${_id}`, courseData);
+      const res = await axios.put(
+        `http://localhost:3000/api/v1/course/${_id}`,
+        courseData
+      );
       toast.success("Course updated successfully!");
       setShowEditModal(false);
       setCurrentCourse({
@@ -78,6 +106,8 @@ export default function CourseAdmin() {
         author: "",
         category: "",
         img: "",
+        videoId: "",
+        courseContain: "",
       });
       fetchCourses();
     } catch (error) {
@@ -97,6 +127,8 @@ export default function CourseAdmin() {
       author: "",
       category: "",
       img: "",
+      videoId: "",
+      courseContain: "",
     });
     setShowAddModal(true);
   };
@@ -110,7 +142,10 @@ export default function CourseAdmin() {
   return (
     <div className="p-6">
       <h3 className="text-2xl font-bold mb-4">Course Management</h3>
-      <p className="mb-4">Manage your courses below. You can add a new course or edit an existing one.</p>
+      <p className="mb-4">
+        Manage your courses below. You can add a new course or edit an existing
+        one.
+      </p>
       <button className="btn btn-primary mb-4" onClick={openAddModal}>
         Add Course
       </button>
@@ -178,6 +213,23 @@ export default function CourseAdmin() {
                 required
               ></textarea>
               <input
+                type="url"
+                name="videoId"
+                placeholder="Video URL"
+                className="input input-bordered w-full"
+                value={currentCourse.videoId}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="courseContain"
+                placeholder="Course Contain"
+                className="textarea textarea-bordered w-full"
+                value={currentCourse.courseContain}
+                onChange={handleChange}
+                required
+              ></textarea>
+              <input
                 type="number"
                 name="price"
                 placeholder="Price"
@@ -204,14 +256,21 @@ export default function CourseAdmin() {
                 value={currentCourse.author}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              {/* Replace category text input with a select */}
+              <select
                 name="category"
-                placeholder="Category"
-                className="input input-bordered w-full"
+                className="select select-bordered w-full"
                 value={currentCourse.category}
                 onChange={handleChange}
-              />
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
               <input
                 type="url"
                 name="img"
@@ -261,6 +320,23 @@ export default function CourseAdmin() {
                 required
               ></textarea>
               <input
+                type="url"
+                name="videoId"
+                placeholder="Video URL"
+                className="input input-bordered w-full"
+                value={currentCourse.videoId}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="courseContain"
+                placeholder="Course Contain"
+                className="textarea textarea-bordered w-full"
+                value={currentCourse.courseContain}
+                onChange={handleChange}
+                required
+              ></textarea>
+              <input
                 type="number"
                 name="price"
                 placeholder="Price"
@@ -287,14 +363,21 @@ export default function CourseAdmin() {
                 value={currentCourse.author}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              {/* Category dropdown */}
+              <select
                 name="category"
-                placeholder="Category"
-                className="input input-bordered w-full"
+                className="select select-bordered w-full"
                 value={currentCourse.category}
                 onChange={handleChange}
-              />
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
               <input
                 type="url"
                 name="img"

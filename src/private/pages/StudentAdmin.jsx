@@ -10,12 +10,10 @@ export default function StudentAdmin() {
   const [currentStudent, setCurrentStudent] = useState({
     _id: "",
     username: "",
-    name: "",
-    email: "",
     role: "student",
   });
 
-  // Function to retrieve token from localStorage
+  // Function to retrieve token (if needed)
   const getToken = () => {
     const storedUser = localStorage.getItem("USER");
     if (storedUser && storedUser !== "undefined") {
@@ -29,7 +27,7 @@ export default function StudentAdmin() {
     return "";
   };
 
-  // Fetch all students from API
+  // Fetch students from API
   const fetchStudents = async () => {
     try {
       const token = getToken();
@@ -47,27 +45,28 @@ export default function StudentAdmin() {
     fetchStudents();
   }, []);
 
-  // Filter students based on selected role
+  // Optional filter by role (if "All" is selected, show all)
   const filteredStudents = filterRole === "All"
     ? students
     : students.filter((student) => student.role.toLowerCase() === filterRole.toLowerCase());
 
-  // Handle input changes for both forms
   const handleChange = (e) => {
     setCurrentStudent({ ...currentStudent, [e.target.name]: e.target.value });
   };
 
-  // Add a new student
+  // Add student
   const handleAddStudent = async (e) => {
     e.preventDefault();
     try {
       const token = getToken();
-      const res = await axios.post("http://localhost:3000/api/v1/auth/register", currentStudent, {
+      // Remove _id from payload if present
+      const { _id, ...payload } = currentStudent;
+      const res = await axios.post("http://localhost:3000/api/v1/auth/register", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Student registered successfully!");
       setShowAddModal(false);
-      setCurrentStudent({ _id: "", username: "", name: "", email: "", role: "student" });
+      setCurrentStudent({ _id: "", username: "", role: "student" });
       fetchStudents();
     } catch (error) {
       console.error("Error adding student", error);
@@ -75,7 +74,7 @@ export default function StudentAdmin() {
     }
   };
 
-  // Update an existing student
+  // Update student
   const handleUpdateStudent = async (e) => {
     e.preventDefault();
     try {
@@ -86,7 +85,7 @@ export default function StudentAdmin() {
       });
       toast.success("Student updated successfully!");
       setShowEditModal(false);
-      setCurrentStudent({ _id: "", username: "", name: "", email: "", role: "student" });
+      setCurrentStudent({ _id: "", username: "", role: "student" });
       fetchStudents();
     } catch (error) {
       console.error("Error updating student", error);
@@ -94,13 +93,11 @@ export default function StudentAdmin() {
     }
   };
 
-  // Open add modal and reset state
   const openAddModal = () => {
-    setCurrentStudent({ _id: "", username: "", name: "", email: "", role: "student" });
+    setCurrentStudent({ _id: "", username: "", role: "student" });
     setShowAddModal(true);
   };
 
-  // Open edit modal with selected student data
   const openEditModal = (student) => {
     setCurrentStudent(student);
     setShowEditModal(true);
@@ -112,7 +109,6 @@ export default function StudentAdmin() {
       <p className="mb-4">
         Manage your student data below. You can add a new student or edit an existing one.
       </p>
-
       {/* Filter Dropdown */}
       <div className="mb-4">
         <label className="mr-2 font-semibold">Filter by Role:</label>
@@ -127,19 +123,15 @@ export default function StudentAdmin() {
           <option value="student">Student</option>
         </select>
       </div>
-
       <button className="btn btn-primary mb-4" onClick={openAddModal}>
         Add Student
       </button>
-
       {/* Students Table */}
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th>Username</th>
-              <th>Name</th>
-              <th>Email</th>
               <th>Role</th>
               <th>Edit</th>
             </tr>
@@ -148,8 +140,6 @@ export default function StudentAdmin() {
             {filteredStudents.map((student) => (
               <tr key={student._id} className="hover">
                 <td>{student.username}</td>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
                 <td>{student.role}</td>
                 <td>
                   <button className="btn btn-sm btn-secondary" onClick={() => openEditModal(student)}>
@@ -161,7 +151,6 @@ export default function StudentAdmin() {
           </tbody>
         </table>
       </div>
-
       {/* Add Student Modal */}
       {showAddModal && (
         <div className="modal modal-open">
@@ -174,24 +163,6 @@ export default function StudentAdmin() {
                 placeholder="Username"
                 className="input input-bordered w-full"
                 value={currentStudent.username}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="input input-bordered w-full"
-                value={currentStudent.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="input input-bordered w-full"
-                value={currentStudent.email}
                 onChange={handleChange}
                 required
               />
@@ -218,7 +189,6 @@ export default function StudentAdmin() {
           </div>
         </div>
       )}
-
       {/* Edit Student Modal */}
       {showEditModal && (
         <div className="modal modal-open">
@@ -231,24 +201,6 @@ export default function StudentAdmin() {
                 placeholder="Username"
                 className="input input-bordered w-full"
                 value={currentStudent.username}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="input input-bordered w-full"
-                value={currentStudent.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="input input-bordered w-full"
-                value={currentStudent.email}
                 onChange={handleChange}
                 required
               />

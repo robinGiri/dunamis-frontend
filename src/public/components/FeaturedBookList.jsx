@@ -81,6 +81,7 @@ export default function FeaturedBookList() {
           {filteredBooks.map((book, index) => (
             <BookCard
               key={index}
+              _id={book._id}
               name={book.courseName}
               description={book.description}
               author={book.author}

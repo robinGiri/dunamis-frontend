@@ -57,9 +57,9 @@ export default function Navbar() {
               <NavItems />
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl text-bold cursor-pointer">
-            Dunamis
-          </a>
+            <Link to="/" className="btn btn-ghost text-xl text-bold cursor-pointer">
+              Dunamis
+            </Link>
         </div>
         <div className="navbar-center hidden lg:flex mx-1 navbar-end">
           <ul className="menu menu-horizontal">
